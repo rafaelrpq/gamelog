@@ -3,9 +3,7 @@
 
 #include "../inc/data.h"
 
-static char *arquivo = "dados.dat";
-
-Data *lerDados (int *len) {
+Data *lerDados (char *arquivo, int *len) {
     Data *data = NULL;
     Data *aux  = malloc (sizeof (Data));
     FILE *file = fopen (arquivo, "rb");
@@ -28,7 +26,7 @@ Data *lerDados (int *len) {
     return (data);
 }
 
-int gravarDados (Data *data) {
+int gravarDados (char *arquivo, Data *data) {
     FILE *file = fopen (arquivo, "a+b");
     if (file == NULL) {
         fprintf (stdout, "Falha ao abrir arquivo: %s.\n[ %s ] linha: %d\n", arquivo, __FILE__, (__LINE__ -2));
@@ -44,7 +42,7 @@ int gravarDados (Data *data) {
     return 1;
 }
 
-int atualizarDados (long pos, Data *data) {
+int atualizarDados (char *arquivo, long pos, Data *data) {
     FILE *file = fopen (arquivo, "rb+");
     if (file == NULL) {
         fprintf (stdout, "Falha ao abrir arquivo: %s.\n[ %s ] linha: %d\n", arquivo, __FILE__, (__LINE__ -2));
@@ -61,7 +59,7 @@ int atualizarDados (long pos, Data *data) {
     return 1;
 }
 
-int removerDados (long pos) {
+int removerDados (char *arquivo, long pos) {
     Data *data = malloc (sizeof (Data));
     FILE *file = fopen (arquivo, "rb");
     if (file == NULL) {
@@ -94,7 +92,7 @@ int removerDados (long pos) {
     return ret;
 }
 
-Data *buscarDados (long pos) {
+Data *buscarDados (char *arquivo, long pos) {
     Data *data = malloc (sizeof (Data));
     FILE *file = fopen (arquivo, "rb");
     if (file == NULL) {

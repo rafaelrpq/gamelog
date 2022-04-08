@@ -6,7 +6,9 @@
 #include "../inc/data.h"
 
 static char *resource = "/com/github/rafaelrpq/gamelog/gamelog.ui";
-static char *image = "/com/github/rafaelrpq/gamelog/logbook.png";
+// static char *image = "/com/github/rafaelrpq/gamelog/logbook.png";
+
+char *arquivo;
 
 MainWindow *buildMain (GtkBuilder *builder) {
     MainWindow *mainWin = malloc (sizeof (MainWindow));
@@ -19,12 +21,15 @@ MainWindow *buildMain (GtkBuilder *builder) {
 
     mainWin->index = -1;
 
-    GtkWidget *icon = gtk_image_new_from_resource (image);
-    gtk_window_set_icon (GTK_WINDOW (mainWin->window), gtk_image_get_pixbuf (icon));
+    // GtkWidget *icon = gtk_image_new_from_resource (image);
+    // gtk_window_set_icon (GTK_WINDOW (mainWin->window), gtk_image_get_pixbuf (icon));
+
+    arquivo = strcat (getenv ("HOME"), "/.config/gamelog.dat");
 
     GtkCellRenderer *render = NULL;
     definirColunas (render, mainWin->treeView);
     preencherTabela (mainWin->treeView);
+
 
     return mainWin;
 }
@@ -107,14 +112,13 @@ void cfmCancelarClicked (GtkWidget *btn, ConfirmWindow *confirmWin) {
 }
 
 void cfmRemoverClicked (GtkWidget *btn, Application *app) {
-    if (removerDados ((long) app->mainWin->index)) {
+    if (removerDados (arquivo, (long) app->mainWin->index)) {
         showDialog ("Registro removido com sucesso!", "dialog-information");
         preencherTabela (app->mainWin->treeView);
     } else {
         showDialog ("Não foi possível remover o registro!", "dialog-error");
     }
     app->mainWin->index = -1;
-    // printf ("[remover] => clicado\n");
 }
 
 void dlgButtonClicked (GtkWidget *btn, DialogWindow *dialogWin) {
@@ -133,7 +137,6 @@ void btnSalvarClicked (GtkWidget *btn, Application *app) {
 
     if (strcmp (game, "") == 0 || strcmp (console, "") == 0 || strcmp (log, "") == 0) {
         showDialog ("Informe todos os campos!", "dialog-warning");
-        // printf ("[!] Informe todos os campos!\n");
         return ;
     }
 
@@ -142,8 +145,7 @@ void btnSalvarClicked (GtkWidget *btn, Application *app) {
     strcpy (data->log, log);
 
     if (app->mainWin->index == -1) {
-        if (gravarDados (data)) {
-            // showDialog ("Registro salvo com sucesso!", "dialog-information");
+        if (gravarDados (arquivo, data)) {
             showDialog ("Registro salvo com sucesso!", "emblem-default");
             preencherTabela (app->mainWin->treeView);
             gtk_widget_destroy (app->gameWin->window);
@@ -151,8 +153,7 @@ void btnSalvarClicked (GtkWidget *btn, Application *app) {
             showDialog ("Não foi possível salvar o registro!", "dialog-error");
         }
     } else {
-        if (atualizarDados ((long) app->mainWin->index, data)) {
-            // showDialog ("Registro salvo com sucesso!", "dialog-information");
+        if (atualizarDados (arquivo, (long) app->mainWin->index, data)) {
             showDialog ("Registro atualizado com sucesso!", "emblem-default");
             preencherTabela (app->mainWin->treeView);
             gtk_widget_destroy (app->gameWin->window);
@@ -180,7 +181,7 @@ void btnEditarClicked (GtkWidget *btn, Application *app) {
         app->gameWin = buildGame (builder) ;
         gtk_header_bar_set_title (GTK_HEADER_BAR (app->gameWin->header), "Editar Registro");
 
-        Data *data = buscarDados ((long) app->mainWin->index);
+        Data *data = buscarDados (arquivo, (long) app->mainWin->index);
         gtk_entry_set_text (GTK_ENTRY (app->gameWin->game), data->game);
         gtk_entry_set_text (GTK_ENTRY (app->gameWin->console), data->console);
         gtk_text_buffer_set_text (GTK_TEXT_BUFFER (app->gameWin->buffer), data->log, -1);
@@ -224,7 +225,7 @@ void definirColunas (GtkCellRenderer *render, GtkWidget *treeView) {
 
 void preencherTabela (GtkWidget *treeView) {
     int len;
-    Data *data = lerDados (&len);
+    Data *data = lerDados (arquivo, &len);
     GtkTreeIter iter = {0, };
 
     GtkListStore *store = gtk_list_store_new (3, G_TYPE_UINT, G_TYPE_STRING, G_TYPE_STRING);
