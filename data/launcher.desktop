@@ -1,5 +1,5 @@
 [Desktop Entry]
-Version=0.1
+Version=1
 Type=Application
 Name=GameLog
 Exec=com.github.rafaelrpq.gamelog

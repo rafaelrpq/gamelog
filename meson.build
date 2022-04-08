@@ -1,5 +1,7 @@
 project ('com.github.rafaelrpq.gamelog', 'c', version: '0.1')
 
+subdir ('data')
+
 resources = import ('gnome').compile_resources (
     'assets',
     'resources.xml',
