@@ -7,14 +7,14 @@ typedef struct {
     char log[256];
 } Data;
 
-Data *lerDados (int *len) ;
+Data *lerDados (char *arquivo, int *len) ;
 
-int gravarDados (Data *data) ;
+int gravarDados (char *arquivo, Data *data) ;
 
-int atualizarDados (long pos, Data *data) ;
+int atualizarDados (char *arquivo, long pos, Data *data) ;
 
-int removerDados (long pos) ;
+int removerDados (char *arquivo, long pos) ;
 
-Data *buscarDados (long pos) ;
+Data *buscarDados (char *arquivo, long pos) ;
 
 #endif

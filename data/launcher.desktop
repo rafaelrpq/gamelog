@@ -1,0 +1,8 @@
+[Desktop Entry]
+Version=0.1
+Type=Application
+Name=GameLog
+Exec=com.github.rafaelrpq.gamelog
+Terminal=false
+Icon=com.github.rafaelrpq.gamelog
+Categories=Game;

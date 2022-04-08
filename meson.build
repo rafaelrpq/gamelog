@@ -15,5 +15,5 @@ executable (
     dependencies: [
         dependency ('gtk+-3.0'),
     ],
-    install : false
+    install : true
 )
