@@ -30,7 +30,6 @@ MainWindow *buildMain (GtkBuilder *builder) {
     definirColunas (render, mainWin->treeView);
     preencherTabela (mainWin->treeView);
 
-
     return mainWin;
 }
 
@@ -67,7 +66,6 @@ ConfirmWindow *buildConfirm (GtkBuilder *builder) {
     confirmWin->window      = GTK_WIDGET (gtk_builder_get_object (builder, "cfmWindow"));
     confirmWin->cfmCancelar = GTK_WIDGET (gtk_builder_get_object (builder, "cfmCancelar"));
     confirmWin->cfmRemover  = GTK_WIDGET (gtk_builder_get_object (builder, "cfmRemover"));
-
 
     return confirmWin;
 }
@@ -161,8 +159,6 @@ void btnSalvarClicked (GtkWidget *btn, Application *app) {
             showDialog ("Não foi possível atualizar o registro!", "dialog-error");
         }
     }
-
-
 }
 
 void btnAdicionarClicked (GtkWidget *btn, Application *app) {
