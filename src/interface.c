@@ -78,10 +78,10 @@ Application *buildApp (GtkBuilder *builder) {
     app->mainWin = buildMain (builder);
     gtk_tree_view_set_activate_on_single_click (GTK_TREE_VIEW (app->mainWin->treeView), TRUE);
 
-    g_signal_connect (app->mainWin->btnAdicionar, "clicked", G_CALLBACK (btnAdicionarClicked), app);
-    g_signal_connect (app->mainWin->btnEditar   , "clicked", G_CALLBACK (btnEditarClicked)   , app);
-    g_signal_connect (app->mainWin->btnRemover  , "clicked", G_CALLBACK (btnRemoverClicked)  , app);
-    g_signal_connect (app->mainWin->treeView, "row_activated", G_CALLBACK (treeViewGetIndices), app->mainWin);
+    g_signal_connect (app->mainWin->btnAdicionar, "clicked"      , G_CALLBACK (btnAdicionarClicked), app);
+    g_signal_connect (app->mainWin->btnEditar   , "clicked"      , G_CALLBACK (btnEditarClicked)   , app);
+    g_signal_connect (app->mainWin->btnRemover  , "clicked"      , G_CALLBACK (btnRemoverClicked)  , app);
+    g_signal_connect (app->mainWin->treeView    , "row_activated", G_CALLBACK (treeViewGetIndices) , app->mainWin);
 
     GtkTreePath *path;
     GtkTreeViewColumn *column;
@@ -102,8 +102,8 @@ void showConfirm (Application *app) {
    GtkBuilder *builder = gtk_builder_new_from_resource (resource);
    ConfirmWindow *confirmWin = buildConfirm (builder);
    g_signal_connect (confirmWin->cfmCancelar, "clicked", G_CALLBACK (cfmCancelarClicked), confirmWin);
-   g_signal_connect (confirmWin->cfmRemover, "clicked", G_CALLBACK (cfmRemoverClicked), app);
-   g_signal_connect (confirmWin->cfmRemover, "clicked", G_CALLBACK (cfmCancelarClicked), confirmWin);
+   g_signal_connect (confirmWin->cfmRemover , "clicked", G_CALLBACK (cfmRemoverClicked) , app);
+   g_signal_connect (confirmWin->cfmRemover , "clicked", G_CALLBACK (cfmCancelarClicked), confirmWin);
    gtk_widget_show_all (confirmWin->window);
 }
 
@@ -140,9 +140,9 @@ void btnSalvarClicked (GtkWidget *btn, Application *app) {
         return ;
     }
 
-    strcpy (data->game, game);
+    strcpy (data->game   , game);
     strcpy (data->console, console);
-    strcpy (data->log, log);
+    strcpy (data->log    , log);
 
     if (app->mainWin->index == -1) {
         if (gravarDados (arquivo, data)) {
@@ -182,7 +182,7 @@ void btnEditarClicked (GtkWidget *btn, Application *app) {
         gtk_header_bar_set_title (GTK_HEADER_BAR (app->gameWin->header), "Editar Registro");
 
         Data *data = buscarDados (arquivo, (long) app->mainWin->index);
-        gtk_entry_set_text (GTK_ENTRY (app->gameWin->game), data->game);
+        gtk_entry_set_text (GTK_ENTRY (app->gameWin->game)   , data->game);
         gtk_entry_set_text (GTK_ENTRY (app->gameWin->console), data->console);
         gtk_text_buffer_set_text (GTK_TEXT_BUFFER (app->gameWin->buffer), data->log, -1);
 
@@ -211,11 +211,13 @@ void definirColunas (GtkCellRenderer *render, GtkWidget *treeView) {
         GTK_TREE_VIEW (treeView),
        -1, "ID", render, "text", 0, NULL
     );
+
     render = gtk_cell_renderer_text_new ();
     gtk_tree_view_insert_column_with_attributes (
         GTK_TREE_VIEW (treeView),
        -1, "Jogo", render, "text", 1, NULL
     );
+
     render = gtk_cell_renderer_text_new ();
     gtk_tree_view_insert_column_with_attributes (
         GTK_TREE_VIEW (treeView),
