@@ -5,9 +5,9 @@ Crie histórico do seu progresso em videogames
 
 **Dependencias**
 ```
-*gtk+-3.0
+gtk+-3.0
 ```
-*
+
 **Compilar e instalar**
 ```
 meson build
