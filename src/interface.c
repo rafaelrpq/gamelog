@@ -111,7 +111,7 @@ void cfmCancelarClicked (GtkWidget *btn, ConfirmWindow *confirmWin) {
 
 void cfmRemoverClicked (GtkWidget *btn, Application *app) {
     if (removerDados (arquivo, (long) app->mainWin->index)) {
-        showDialog ("Registro removido com sucesso!", "dialog-information");
+        // showDialog ("Registro removido com sucesso!", "dialog-information");
         preencherTabela (app->mainWin->treeView);
     } else {
         showDialog ("Não foi possível remover o registro!", "dialog-error");
@@ -144,7 +144,7 @@ void btnSalvarClicked (GtkWidget *btn, Application *app) {
 
     if (app->mainWin->index == -1) {
         if (gravarDados (arquivo, data)) {
-            showDialog ("Registro salvo com sucesso!", "emblem-default");
+            // showDialog ("Registro salvo com sucesso!", "emblem-default");
             preencherTabela (app->mainWin->treeView);
             gtk_widget_destroy (app->gameWin->window);
         } else {
@@ -152,7 +152,7 @@ void btnSalvarClicked (GtkWidget *btn, Application *app) {
         }
     } else {
         if (atualizarDados (arquivo, (long) app->mainWin->index, data)) {
-            showDialog ("Registro atualizado com sucesso!", "emblem-default");
+            // showDialog ("Registro atualizado com sucesso!", "emblem-default");
             preencherTabela (app->mainWin->treeView);
             gtk_widget_destroy (app->gameWin->window);
         } else {
