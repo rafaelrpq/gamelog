@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<gresources>
-  <gresource prefix="/com/github/rafaelrpq/gamelog/">
-    <file>gamelog.ui</file>
-    <file>logbook.png</file>
-  </gresource>
-</gresources>
