@@ -1,7 +1,7 @@
 # gamelog
 Crie histórico do seu progresso em videogames
 
-![screenshot](https://github.com/rafaelrpq/gamelog/blob/main/data/screenshot.png)
+![screenshot](/data/screenshot.png)
 
 **Dependencias**
 ```
