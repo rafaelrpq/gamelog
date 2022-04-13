@@ -4,7 +4,7 @@
 typedef struct {
     char game[64];
     char console[64];
-    char log[256];
+    char log[1024];
 } Data;
 
 Data *lerDados (char *arquivo, int *len) ;
